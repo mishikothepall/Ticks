@@ -1,0 +1,35 @@
+﻿@model Tick_win.Models.SearchViewModel
+@{
+    /**/
+
+    ViewBag.Title = "AvailableTrains";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+
+<div class="search-form">
+    @using (Ajax.BeginForm("PartTrains", "Admin", null, new AjaxOptions { UpdateTargetId = "trainsList", HttpMethod = "POST" }))
+    {
+        <ul>
+            <li>@Html.EditorFor(m => m.DepartureStation)</li>
+            <li>@Html.EditorFor(m => m.ArrivalStation)</li>
+            <li>@Html.EditorFor(m => m.DepartureDate)</li>
+        </ul>
+        <input type="submit" name="button" value="Найти поезд">
+    }
+</div>
+
+<div class="admin-menu">
+    <ul>
+        <li>@Html.ActionLink("Список поездов", "AvailableTrains", "Admin")</li>
+        <li>@Html.ActionLink("Добавить поезд", "CreateRoute", "Admin")</li>
+        <li>@Html.ActionLink("Добавить маршрут", "CreatePath", "Admin")</li>
+        <li>@Html.ActionLink("Создать кассира", "AdminIndex", "Admin")</li>
+    </ul>
+</div>
+
+<div id="trainsList">
+    @Html.Partial("PartTrains", TempData["Trains"])
+</div>

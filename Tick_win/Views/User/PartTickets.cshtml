@@ -1,0 +1,41 @@
+﻿@model List<Tick_win.Models.PlaceViewModel>
+
+@for (int i = 0; i < Model.Count(); i++) {
+<div class="ticket-info">
+    <div class="ticket-ico">
+        <img src="~/Images/ticket-logo.png" alt="Ticket Icon">
+        <br>
+        <label>@Html.DisplayFor(m=>m[i].Status)</label>
+    </div>
+    <label class="num">
+        Номер поезда: <a class="train-number">@Html.DisplayFor(m => m[i].Train)</a>
+    </label>
+    <br>
+    <div class="transitional">
+        <label class="myLabel">Станция отправления: @Html.DisplayFor(m => m[i].DepStation)</label>
+
+
+        <label class="myLabel">Время отправления: @Html.DisplayFor(m => m[i].Departure)</label>
+
+
+        <label class="myLabel">Станция прибытия: @Html.DisplayFor(m => m[i].ArrivalStation)</label>
+
+
+        <label class="myLabel">Время прибытия: @Html.DisplayFor(m => m[i].Arrival)</label>
+
+        <label class="myLabel">Тип места: @Html.DisplayFor(m => m[i].Type)</label>
+
+        <label class="myLabel">Вагон: @Html.DisplayFor(m => m[i].Wagon)</label>
+
+        <label class="myLabel">Место: @Html.DisplayFor(m => m[i].Place)</label>
+
+
+    </div>
+
+    <label class="cost">
+        Цена: <a class="price"> @Html.DisplayFor(m => m[i].Price)</a>
+    </label>
+    <br>
+    @Html.ActionLink("Удалить билет", "RemoveTicket", "User", new { tickId = Model[i].Id }, new { id = "tickId" })
+</div>
+    }

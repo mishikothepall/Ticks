@@ -1,0 +1,8 @@
+﻿@model List<Tick_win.Models.PathViewModel>
+
+@for (int i = 0; i < Model.Count(); i++)
+{
+    <br>
+    @Html.ActionLink($"{Model[i].RouteName}", "EditPath", "Admin", new { pathName = $"{Model[i].RouteName}" }, new { id = "pathName" })
+    <br>
+}

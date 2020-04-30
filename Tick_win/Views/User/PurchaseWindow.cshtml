@@ -1,0 +1,99 @@
+﻿@model Tick_win.Models.PlaceViewModel
+@{
+                /**/
+
+                /**/
+
+                ViewBag.Title = "PurchaseWindow";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="about-train">
+    <p>@Html.ValidationSummary(false, "", new { @id = "danger-message" })</p>
+    @using (Html.BeginForm("MakePurchase", "User", FormMethod.Post))
+    {
+        <label>Номер поезда: @Html.DisplayFor(m => m.Train)</label>
+        @Html.HiddenFor(m => m.Train, Model.Train)
+
+        <br>
+        <p>@Html.ValidationMessageFor(m => m.DepStation, null, new { @id = "danger-message" })</p>
+        <label>Выберите станцию отправления: @Html.DropDownListFor(m => m.DepStation, Model.Departures, new { @id = "departures" })</label>
+
+        <br>
+        <p>@Html.ValidationMessageFor(m => m.ArrivalStation, null, new { @id = "danger-message" })</p>
+        <label>Выберите конечную станцию: @Html.DropDownListFor(m => m.ArrivalStation, Model.Arrivals, new { @id = "arrivals" })</label>
+
+        <br>
+        <p>@Html.ValidationMessageFor(m => m.Type, null, new { @id = "danger-message" })</p>
+        for (int i = 0; i < Model.Seats.Count(); i++)
+        {
+            <br>
+            @Html.HiddenFor(m => m.Seats[i].Type, Model.Seats[i].Type)
+            @Html.HiddenFor(m => m.Price, Model.Seats[i].Price)
+
+            <label>
+                @Html.RadioButtonFor(m => m.Type, Model.Seats[i].Type) @Model.Seats[i].Type - цена: @Model.Seats[i].Price - количество @Model.Seats[i].Quantity
+            </label>
+            <br>
+        }
+        if (Model.Seats.Count <= 0)
+        {
+            <p>Мест нет</p>
+        }
+        else
+        {
+        <input type="submit" name="button" value="Подтвердить покупку">
+        }
+    }
+</div>
+
+@section scripts{
+    <script>
+        var ar = null;
+        var dep = null;
+
+
+        document.getElementById("departures").addEventListener("change", function () {
+            let srch = document.getElementById("arrivals");
+            let opt = document.createElement("option");
+            for (let i = 0; i < srch.length; i++) {
+                if (ar != null && ar != this.options[this.selectedIndex].text) {
+
+                    opt.innerText = ar;
+                    srch.appendChild(opt);
+                    ar = null;
+                    continue;
+                }
+                else
+                    if (srch.options[i].text == this.options[this.selectedIndex].text) {
+                        ar = srch.options[i].text;
+                        srch.remove(i);
+
+                    }
+
+            };
+        }, false);
+
+        document.getElementById("arrivals").addEventListener("change", function () {
+            let srch = document.getElementById("departures");
+            let opt = document.createElement("option");
+            for (let i = 0; i < srch.length; i++) {
+                if (dep != null && dep != this.options[this.selectedIndex].text) {
+
+                    opt.innerText = dep;
+                    srch.appendChild(opt);
+                    dep = null;
+                    continue;
+                }
+                else
+                    if (srch.options[i].text == this.options[this.selectedIndex].text) {
+                        dep = srch.options[i].text;
+                        srch.remove(i);
+
+                    }
+            };
+        }, false);
+
+    </script>
+}
+

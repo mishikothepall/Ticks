@@ -1,0 +1,96 @@
+﻿@model Tick_win.Models.RouteViewModel
+@{
+    ViewBag.Title = "CreateRoute";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="adminMenu">
+    <ul>
+        <li>@Html.ActionLink("Список поездов", "AvailableTrains", "Admin")</li>
+        <li>@Html.ActionLink("Добавить поезд", "CreateRoute", "Admin")</li>
+        <li>@Html.ActionLink("Добавить маршрут", "CreatePath", "Admin")</li>
+        <li>@Html.ActionLink("Создать кассира", "AdminIndex", "Admin")</li>
+    </ul>
+</div>
+
+<div class="about-train">
+    @using (Html.BeginForm("CreateRoute", "Admin", FormMethod.Post))
+    {
+        @Html.LabelFor(m => m.Number, "Номер поезда: ")
+        @Html.EditorFor(m => m.Number)
+        <br>
+        @Html.LabelFor(m => m.DepartureStation, "Начальная станция: ")
+        @Html.EditorFor(m => m.DepartureStation)
+        <br>
+        @Html.LabelFor(m => m.ArrivalStation, "Конечная станция: ")
+        @Html.EditorFor(m => m.ArrivalStation)
+        <br>
+        @Html.LabelFor(m => m.Departure, "Отправление: ")
+        @Html.EditorFor(m => m.Departure)
+        <br>
+        @Html.DropDownListFor(m => m.SelectedRoute, Model.CurrentRoute, new { id = "routeName" })
+
+
+        <div id="stations"></div>
+        <br>
+
+        for (int i = 0; i < Model.Seats.Count(); i++)
+        {
+            <br>
+            <label>Тип места: </label>
+            @Html.EditorFor(m => m.Seats[i].Type, Model.Seats[i].Type)
+            <br>
+            <label>Количество мест: </label>
+            @Html.EditorFor(m => m.Seats[i].Quantity, Model.Seats[i].Quantity)
+            <br>
+            <label>Цена места: </label>
+            @Html.EditorFor(m => m.Seats[i].Price, Model.Seats[i].Price)
+            <br>
+
+        }
+
+        <br>
+
+        <input type="submit" name="button" value="Создать">
+    }
+    </div>
+    @section scripts{
+
+        <script>
+
+        var num = 0;
+
+        window.onload = function () {
+            let el = document.getElementById('routeName');
+            let dat = { routeName: el.options[0].text}
+            let tt = JSON.stringify(dat);
+            $.ajax({
+                url: '@Url.Action("StopList", "Admin")',
+                type: 'POST',
+                data: tt,
+                contentType: "application/json",
+                success: function (data) {
+                    $('#stations').html(data);
+                }
+            });
+        }
+
+        document.getElementById('routeName').addEventListener("change", function () {
+
+            let dat = { routeName: this.options[this.selectedIndex].text}
+            let tt = JSON.stringify(dat);
+            $.ajax({
+                url: '@Url.Action("StopList", "Admin")',
+                type: 'POST',
+                data: tt,
+                contentType: "application/json",
+                success: function (data) {
+                    $('#stations').html(data);
+                }
+            });
+
+        }
+        );
+
+        </script>
+
+    }

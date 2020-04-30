@@ -1,0 +1,28 @@
+﻿@model Tick_win.Models.SearchViewModel
+
+@{
+    ViewBag.Title = "HomePage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="search-form">
+@using (Ajax.BeginForm("HomePartial", "Home", null, new AjaxOptions { UpdateTargetId = "routes", HttpMethod = "POST" }, new { @id = "search-form" }))
+{
+    <ul>
+    <li>
+        <label>Откуда: </label>
+        <br>
+        @Html.EditorFor(m => m.DepartureStation)
+    </li>
+    <li>
+        <label>Куда: </label>
+        <br>
+        @Html.EditorFor(m => m.ArrivalStation)
+    </li>
+    <li>@Html.EditorFor(m => m.DepartureDate)</li>
+     </ul>
+    <input type="submit" name="button" value="Найти билет">
+}
+</div>
+<div id="routes">
+    @Html.Partial("HomePartial", Model.Trains)
+</div>

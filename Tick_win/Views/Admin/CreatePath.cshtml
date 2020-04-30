@@ -1,0 +1,47 @@
+﻿@model Tick_win.Models.PathViewModel
+
+@{
+    /**/
+
+    ViewBag.Title = "CreatePath";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="adminMenu">
+    <ul>
+        <li>@Html.ActionLink("Добавить поезд", "CreateRoute", "Admin")</li>
+        <li>@Html.ActionLink("Добавить маршрут", "CreatePath", "Admin")</li>
+        <li>@Html.ActionLink("Создать кассира", "AdminIndex", "Admin")</li>
+    </ul>
+</div>
+<div class="about-train">
+    @using (Ajax.BeginForm("PathAdd", "Admin", null, new AjaxOptions { UpdateTargetId = "pathList", HttpMethod = "POST" }, new { @id = "search-form" }))
+    {
+
+        @Html.EditorFor(m => m.RouteName)
+        <br>
+        @Html.EditorFor(m => m.Distance)
+        <div id="stats[0]">
+            <br>
+            @Html.DropDownListFor(m => m.Stops, Model.Stations)
+            <br>
+        </div>
+        <input type="button" name="button" value="Добавить ещё" onclick="AddMore()">
+        <br>
+        <input type="button" name="button" value="Удалить" onclick="Remove()">
+        <br>
+        <input type="submit" name="button" value="Создать">
+
+    }
+    </div>
+    <div id="pathList">
+        @Html.Partial("PathAdd", TempData["PathList"])
+    </div>
+
+    <div class="inner-search">
+        @using (Html.BeginForm("CreateStation", "Admin", FormMethod.Post))
+        {
+            @Html.EditorFor(m => m.Station)
+
+            <input type="submit" name="button" value="Создать станцию">
+        }
+    </div>

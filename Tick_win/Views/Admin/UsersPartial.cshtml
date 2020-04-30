@@ -1,0 +1,9 @@
+﻿@model List<Tick_win.Models.UserViewModel>
+
+@for (int i = 0; i < Model.Count; i++)
+{
+    <br>
+    @Html.DisplayFor(m => m[i].Name)
+    @Html.ActionLink("Создать кассира", "CreateCashier", "Admin", new { userId = Model[i].UserId }, new { id = "userId" })
+    <br>
+}

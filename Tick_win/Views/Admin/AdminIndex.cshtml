@@ -1,0 +1,27 @@
+﻿@model Tick_win.Models.UserViewModel
+
+@{
+    ViewBag.Title = "AdminIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="inner-search">
+    @using (Ajax.BeginForm("UsersPartial", "Admin", null, new AjaxOptions { UpdateTargetId = "users", HttpMethod = "POST" }, new { @id = "search-form" }))
+    {
+        @Html.EditorFor(m => m.Name)
+
+        <input type="submit" name="button" value="Поиск">
+    }
+    </div>
+<div class="admin-menu">
+    <ul>
+        <li>@Html.ActionLink("Список поездов", "AvailableTrains", "Admin")</li>
+        <li>@Html.ActionLink("Добавить поезд", "CreateRoute", "Admin")</li>
+        <li>@Html.ActionLink("Добавить маршрут", "CreatePath", "Admin")</li>
+        <li>@Html.ActionLink("Создать кассира", "AdminIndex", "Admin")</li>
+    </ul>
+</div>
+    <div id="users">
+        @Html.Partial("UsersPartial", TempData["Users"])
+    </div>

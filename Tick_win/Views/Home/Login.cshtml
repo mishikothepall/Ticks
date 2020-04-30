@@ -1,0 +1,28 @@
+﻿@model Tick_win.Models.LoginViewModel
+@{
+                /**/
+
+                ViewBag.Title = "Login";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="login-form">
+    @Html.ValidationSummary()
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="returnUrl" value="@TempData["returnUrl"]" />
+        <div class="userName">
+            <label>Ваше имя:  </label>
+            @Html.TextBoxFor(m => m.UserName)
+            @Html.ValidationMessageFor(m => m.UserName, null, new { @id = "danger-message" })
+        </div>
+        <div class="password">
+            <label>Ваш пароль:  </label>
+            @Html.PasswordFor(m => m.Password)
+            @Html.ValidationMessageFor(m => m.Password, null, new { @id = "danger-message" })
+        </div>
+        <input type="submit" name="submit" value="Подтвердить">
+    }
+</div>
+

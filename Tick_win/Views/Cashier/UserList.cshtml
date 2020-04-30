@@ -1,0 +1,21 @@
+﻿@model Tick_win.Models.UserViewModel
+@{
+    ViewBag.Title = "UserList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="my-off">
+@Html.ActionLink("Мой кабинет", "UserIndex", "User")
+    </div>
+<div class="inner-search">
+    <br>
+
+    @using (Ajax.BeginForm("ULPartial", "Cashier", null, new AjaxOptions { UpdateTargetId = "userList", HttpMethod = "POST" }, new { @id = "search-form" }))
+    {
+        @Html.EditorFor(m => m.Name)
+
+        <input type="submit" name="button" value="Поиск">
+    }
+</div>
+<div id="userList">
+    @Html.Partial("ULPartial", TempData["Users"])
+</div>

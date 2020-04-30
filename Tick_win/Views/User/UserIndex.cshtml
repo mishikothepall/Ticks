@@ -1,0 +1,44 @@
+﻿@model Tick_win.Models.UserViewModel
+
+@{
+    ViewBag.Title = "UserIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="login-form">
+    <p>@Html.ValidationSummary(false, "", new { @id = "danger-message" })</p>
+    @using (Html.BeginForm("UserIndex", "User", FormMethod.Post))
+    {
+        @Html.HiddenFor(m => m.UserId, Model.UserId)
+        
+            <label>Имя пользователя: </label>
+            @Html.EditorFor(m => m.Name, Model.Name)
+       
+            <label>Email: </label>
+            @Html.EditorFor(m => m.Email, Model.Email)
+        
+        
+            <label>Телефон: </label>
+            @Html.EditorFor(m => m.PhoneNumber, Model.PhoneNumber)
+       
+
+            <input type="submit" name="button" value="Редактировать" id="editBtn">
+            }
+        </div>
+        <div class="tickets">
+            @Html.Partial("PartTickets", Model.MyTickets)
+        </div>
+        @section scripts{
+            <script>
+
+                document.getElementById("editBtn").addEventListener("click", function (evt) {
+
+                    let ans = confirm("Для внесения изменений потребуется снова зайти на сайт");
+                    if (ans == false) {
+                        evt.preventDefault();
+                    }
+
+                });
+
+            </script>
+        }

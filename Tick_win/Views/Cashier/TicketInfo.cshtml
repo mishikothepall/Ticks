@@ -1,0 +1,21 @@
+﻿@model Tick_win.Models.PlaceVerificationModel
+
+@{
+    ViewBag.Title = "TicketInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p>@Html.ValidationSummary(true)</p>
+<div class="about-train">
+    @using (Html.BeginForm("TicketInfo", "Cashier", FormMethod.Post))
+    {
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.TrainNumber)
+        <label>Номер вагона: </label>
+        @Html.EditorFor(m => m.Wagon)
+        <br>
+        <label>Номер места: </label>
+        @Html.EditorFor(m => m.Place)
+        <input type="submit" name="button" value="Подтвердить">
+    }
+</div>

@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parovozik.ua</title>
+    @Styles.Render("~/Content/MyStyle.css")
+    @Scripts.Render("~/Scripts/MyScript.js")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/Scripts/jquery-3.3.1.js")
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.js")
+    @Scripts.Render("~/Scripts/jquery.validate.min.js")
+    @Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")
+</head>
+<body>
+    <header>
+        <div class="main-logo">
+            @Html.ActionLink("Parovozik.ua", "HomePage", "Home")
+        </div>
+        @if (!Request.IsAuthenticated)
+        {
+            <div class="registration">
+                @Html.ActionLink("Регистрация", "Create", "Home")
+            </div>
+            <div class="login">
+                @Html.ActionLink("Вход", "Login", "Home")
+            </div>
+        }
+        else
+        {
+
+            <div class="mycab">
+                @if (User.IsInRole("admin"))
+                {
+                    @Html.ActionLink($"{User.Identity.Name}", "AvailableTrains", "Admin")
+                }
+                else
+                if (User.IsInRole("cashier"))
+                {
+                    @Html.ActionLink($"{User.Identity.Name}", "UserList", "Cashier")
+                    
+                }
+                else
+                {
+                    @Html.ActionLink($"{User.Identity.Name}", "UserIndex", "User")
+                }
+            </div>
+            <div class="logout">
+                @Html.ActionLink("Выход", "LogOut", "Home")
+            </div>
+        }
+    </header>
+<div class="main-body">
+    @RenderBody()
+
+    <button onclick="topFunction()" id="myBtn"><div class="arrow-up"></div></button>
+</div>
+<footer>
+    <h4>&copy; PodenkoMikhail.com 2020 <br> All Rights Reserved</h4>
+</footer>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

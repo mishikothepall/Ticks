@@ -1,0 +1,22 @@
+﻿@model Tick_win.Models.PathViewModel
+
+@{
+    ViewBag.Title = "EditPath";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>EditPath</h2>
+
+@using (Html.BeginForm("EditPath", "Admin", FormMethod.Post))
+{
+    @Html.HiddenFor(m => m.OldName)
+    <label>Название маршрута: </label>
+    @Html.EditorFor(m => m.RouteName)
+    <br>
+    <label>Длина маршрута: </label>
+    @Html.EditorFor(m => m.Distance, Model.Distance)
+    <br>
+
+    <input type="submit" name="button" value="Создать">
+
+}

@@ -1,0 +1,56 @@
+﻿@model List<Tick_win.Models.TrainViewModel>
+<p>@Html.ValidationSummary(false, "", new { @id = "danger-message" })</p>
+    @for (int i = 0; i < Model.Count(); i++)
+    {
+
+        <div class="train-info">
+            <div class="train-name">
+                @Html.ActionLink($"Поезд: {Model[i].Number}, Маршрут:  {Model[i].DepartureStation} - {Model[i].ArrivalStation}", "TrainInfo", "Home", new { trainNum = $"{Model[i].Number}" }, new { id = "trainNum" })
+            </div>
+            <div class="train-ico">
+                <img src="~/Images/logo-train_5C75uQ3N.png" alt="Train Icon">
+            </div>
+            <div class="route-info">
+                <p>Из: @Model[i].DepartureStation В : @Model[i].Departure - @Model[i].Total - На: @Model[i].ArrivalStation В : @Model[i].Arrival</p>
+            </div>
+            <div class="transitional">
+                @for (int t = 0; t < Model[i].Transitional.Count(); t++)
+                {
+                    <div class="transInfo">
+                        <div class="stopStation">@Html.DisplayFor(m => m[i].Transitional[t].StopStation, Model[i].Transitional[t].StopStation)</div>
+                        @if (t == Model[i].Transitional.Count() - 1)
+                        {
+
+                            <div class="time">
+                                <label>Время прибытия: @Html.DisplayFor(m => m[i].Transitional[t].Arrival, Model[i].Transitional[t].Arrival)</label>
+                            </div>
+                            <br>
+                        }
+                        else
+                        if (t == 0)
+                        {
+
+                            <div class="time">
+                                <label>Время отправления: @Html.DisplayFor(m => m[i].Transitional[t].Departure, Model[i].Transitional[t].Departure)</label>
+                            </div>
+                            <br>
+                        }
+                        else
+                        {
+
+                            <div class="time">
+                                <label>Время прибытия: @Html.DisplayFor(m => m[i].Transitional[t].Arrival, Model[i].Transitional[t].Arrival)</label>
+                                <br>
+                                <label>Время отправления: @Html.DisplayFor(m => m[i].Transitional[t].Departure, Model[i].Transitional[t].Departure)</label>
+                            </div>
+                            <br>
+                        }
+                    </div>
+
+                }
+
+            </div>
+            @Html.ActionLink("Редактировать поезд", "EditTrain", "Admin", new { trainNumber = $"{Model[i].Number}" }, new { id = "trainNumber" })
+        </div>
+
+    }

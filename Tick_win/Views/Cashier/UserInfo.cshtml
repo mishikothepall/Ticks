@@ -1,0 +1,36 @@
+﻿@model Tick_win.Models.UserViewModel
+
+@{
+    ViewBag.Title = "UserInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="tick-verif">
+
+@for (int i = 0; i < Model.MyTickets.Count(); i++)
+{
+<div class="ticket-info">
+    <div class="ticket-ico">
+        <img src="~/Images/ticket-logo.png" alt="Ticket Icon">
+        <br>
+    </div>
+    <br>
+    @Html.HiddenFor(m => m.MyTickets[i].Train)
+    <br>
+    <label class="num">Номер поезда: @Model.MyTickets[i].Train</label>
+    <div class="transitional">
+        <label class="myLabel">Имя пассажира: @Html.DisplayFor(m => m.Name, Model.Name)</label>
+        
+        <label class="myLabel">Станция отправления: @Model.MyTickets[i].DepStation - @Model.MyTickets[i].Departure</label>
+
+        <label class="myLabel">Станция прибытия: @Model.MyTickets[i].ArrivalStation - @Model.MyTickets[i].Arrival</label>
+
+        <label class="myLabel"> Вид места: @Model.MyTickets[i].Type - @Model.MyTickets[i].Price</label>
+
+        <label class="myLabel">место: @Model.MyTickets[i].Place - вагон: @Model.MyTickets[i].Wagon</label>
+    </div>
+        @Html.ActionLink("Подтвердить билет", "TicketInfo", "Cashier", new { ticketId = Model.MyTickets[i].Id }, new { id = "ticketId" })
+    </div>
+    }
+    </div>
